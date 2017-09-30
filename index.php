@@ -1,14 +1,30 @@
 <?php
 
 	$obj = new main();
+	
+	// display order goes here
+	$var = '<h1>testing</h1>';
+	main::displayVar($var);
 
+	// standard functions go in here
 	class main {
 		public function __construct() {
-			echo 'Starting the function display: </br>';
+			echo 'Starting the function display: <br>';
+		}
+		
+		static public function displayVar($var) {
+			echo $var;
 		}
 		
 		public function __destruct() {
-			echo '</br> All done!';
+			echo '<br> All done!';
+		}
+	}
+	
+	// new classes (function packages) go here
+	class displayer {
+		 static public function displayVar($var) {
+			echo $var;
 		}
 	}
 
