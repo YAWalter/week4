@@ -3,8 +3,10 @@
 	$obj = new main();
 	
 	// display order goes here
-	$var = '<h1>testing</h1>';
-	main::displayVar($var);
+	$questions = 10;
+	for ($i = 1; $i <= $questions; $i++) {
+		answers::buildAnswer($i);		// creates the answer text
+	}
 
 	// standard functions go in here
 	class main {
@@ -12,8 +14,8 @@
 			echo 'Starting the function display: <br>';
 		}
 		
-		static public function displayVar($var) {
-			echo $var;
+		static public function displayVar() {
+			// echo $var;
 		}
 		
 		public function __destruct() {
@@ -22,9 +24,12 @@
 	}
 	
 	// new classes (function packages) go here
-	class displayer {
-		 static public function displayVar($var) {
-			echo $var;
+	class answers {
+		 static public function buildAnswer($order) {
+			$text = $order . '. ';
+			
+			$text .= '<br>';
+			echo $text;
 		}
 	}
 
