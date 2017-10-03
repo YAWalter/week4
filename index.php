@@ -8,28 +8,26 @@
 		
 		// constructor holds initial array value & prints initial output
 		public function __construct() {
-			echo "HTML: $html";
-/*			echo 'Starting the function display: <br>';
-			
-			echo '1. The Original Data: <br> <pre>';
+			// variables:
 			$date =  date('Y-m-d', time());
-			echo "The value of \$date: ".$date."<br>";
-
 			$tar = "2017/05/24";
-			echo "The value of \$tar: ".$tar."<br>";
-
 			$year = array("2012", "396", "300","2000", "1100", "1089");
-			echo "The value of \$year: ";
-			print_r($year);
+			
+			// output:
+			$html .= 'Starting the function display:';
+			echo '1. The Original Data: <br>';
+			
+			$this->html .= textFormat::preformat('The value of \$date: ' . $date . textFormat::lineBreak() . 'The value of \$tar: ' . $tar . textFormat::lineBreak() . 'The value of \$year: ' . 	print_r($year));
 
-			echo '</pre>';
-*/		}
+			echo "HTML: $html";
+		}
 		
 		static public function displayVar() {
 			// echo $var;
 		}
 		
 		public function __destruct() {
+			print($html);
 			echo '<br> All done!';
 		}
 	}
@@ -41,11 +39,21 @@
 	}
 	
 	// new classes (function packages) go here
+	class textFormat {
+		 static public function preformat($str) {
+			 return print('<pre>' . $str . '</pre>');
+		 }
+		 
+		 static public function lineBreak($str) {
+			 return '<br>';
+		 }
+	}
+
 	class answers {
 		 static public function buildAnswer($order) {
 			$text = $order . '. ';
 			
-			$text .= '<br>';
+			
 			echo $text;
 		}
 	}
