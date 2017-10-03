@@ -2,17 +2,28 @@
 
 	$obj = new main();
 	
-	// display order goes here
-	$questions = 10;
-	for ($i = 1; $i <= $questions; $i++) {
-		answers::buildAnswer($i);		// creates the answer text
-	}
-
-	// standard functions go in here
 	class main {
+		
+		private $html; 	// for output string
+		
+		// constructor holds initial array value & prints initial output
 		public function __construct() {
-			echo 'Starting the function display: <br>';
-		}
+			echo "HTML: $html";
+/*			echo 'Starting the function display: <br>';
+			
+			echo '1. The Original Data: <br> <pre>';
+			$date =  date('Y-m-d', time());
+			echo "The value of \$date: ".$date."<br>";
+
+			$tar = "2017/05/24";
+			echo "The value of \$tar: ".$tar."<br>";
+
+			$year = array("2012", "396", "300","2000", "1100", "1089");
+			echo "The value of \$year: ";
+			print_r($year);
+
+			echo '</pre>';
+*/		}
 		
 		static public function displayVar() {
 			// echo $var;
@@ -21,6 +32,12 @@
 		public function __destruct() {
 			echo '<br> All done!';
 		}
+	}
+	
+	// display order goes here
+	$questions = 10;
+	for ($i = 1; $i <= $questions; $i++) {
+		answers::buildAnswer($i);		// creates the answer text
 	}
 	
 	// new classes (function packages) go here
@@ -33,21 +50,7 @@
 		}
 	}
 
-/*	TODO: put this in a new function
-	echo '1. The Original Data: <br> <pre>';
-
-	$date =  date('Y-m-d', time());
-	echo "The value of \$date: ".$date."<br>";
-
-	$tar = "2017/05/24";
-	echo "The value of \$tar: ".$tar."<br>";
-
-	$year = array("2012", "396", "300","2000", "1100", "1089");
-	echo "The value of \$year: ";
-	print_r($year);
-
-	echo '</pre>';
-*/
+	
 
 /* TODO:
 2.  Replace “-“ in $date with “/“ and print out the result.
