@@ -122,10 +122,12 @@
 		
 		// 4. Search for “/“ in $date and print out all positions. If there are more than one position, please delimit each position value with space.
 		static public function quesFour($date) {
-			$pos = 0;
+			$pos    = 0;
 			$answer = '';
-			while ($pos < strlen($date)) {
-				if ($date[$pos] == '/') {
+			$fdate  = textFormat::makeSlashes($date);
+			
+			while ($pos < strlen($fdate)) {
+				if ($fdate[$pos] == '/') {
 					$answer .= $pos . ' ';
 				}
 				$pos++;
