@@ -3,6 +3,7 @@
 	// debugging
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL | E_STRICT);
+	date_default_timezone_set('UTC');
 	
 
 	$obj = new main();
@@ -33,9 +34,9 @@
 			$this->html .= '<ol>';
 			$this->html .= textFormat::makeListItem(answers::quesOne($serial));
 			$this->html .= textFormat::makeListItem(answers::quesTwo($date));
+			$this->html .= textFormat::makeListItem(answers::quesThree($serial));
+			$this->html .= textFormat::makeListItem(answers::quesFour($date));
 /*
-			$this->html .= textFormat::makeListItem(answers::quesThree($this->html));
-			$this->html .= textFormat::makeListItem(answers::quesFour($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesFive($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesSix($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesSeven($this->html));
@@ -71,6 +72,12 @@
 		static public function makeListItem($str) {
 			return '<li>' . $str . '</li>';
 		}
+		
+		static public function makeSlashes($str) {
+			$tmp = str_replace('-', '/', $str)  . textFormat::lineBreak();
+			
+			return $tmp;
+		}
 	}
 
 	class answers {
@@ -83,32 +90,53 @@
 			return textformat::preformat($answer);
 		}
 		
+		// 2. Replace “-“ in $date with “/“
 		static public function quesTwo($date) {
 			$answer  = 'Replace “-“ in $date with “/“: ' . textFormat::lineBreak();
-			$answer .= str_replace('-', '/', $date)  . textFormat::lineBreak();
+			$answer .= textFormat::makeSlashes($date);
 			
 			return textformat::preformat($answer);
 		}
 		
+		// 3. Compare $date with $tar and then if the result is greater than 0, you should print out “the future”; if the result is less than 0, you should print out “the past”; if the result is equal to 0, you should print out “Oops”. You must use if-elseif statement in this question.
 		static public function quesThree($obj) {
-			$tar = date('Y-m-d', $obj['tar']);
-			if ($obj['date'] - $obj['tar'] > 0) {
+			$date = str_replace('-', '', $obj['date']);
+			$tar  = str_replace('/', '', $obj['tar']);
+
+			if ($tar - $date > 0) {
 				$answer = 'the future';
-			} elseif ($obj['date'] - $obj['tar'] < 0) {
+			} elseif ($tar - $date < 0) {
 				$answer = 'the past';
+			} elseif ($tar - $date == 0) {
+				$answer = 'Oops';
+			} else {
+				$answer = 'ERROR';
 			}
 			$answer .= textFormat::lineBreak();
 			
+/*			$answer .= '***' . $tar . ' - ' . $date . ' = ' . $tar - $date . '***';
+			$answer .= textFormat::lineBreak();*/
+			
 			return textformat::preformat($answer);
+		}
+		
+		// 4. Search for “/“ in $date and print out all positions. If there are more than one position, please delimit each position value with space.
+		static public function quesFour($date) {
+			$pos = 0;
+			$answer = '';
+			while ($pos < strlen($date)) {
+				if ($date[$pos] == '/') {
+					$answer .= $pos . ' ';
+				}
+				$pos++;
+			}
+			
+			return textFormat::preformat($answer);
 		}
 	}
 	
 
 /* TODO:
-3. Compare $date with $tar and then if the result is greater than 0, you should print out “the future”; if the result is less than 0, you should print out “the past”; if the result is equal to 0, you should print out “Oops”. You must use if-elseif statement in this question. 
-
-4. Search for “/“ in $date and print out all positions. If there are more than one position, please delimit each position value with space.
-
 5. Count the number of words in $date and print out the result.
 
 6. Return the length of a string and print out the result.
@@ -125,9 +153,6 @@
 	C. You need to delimit each result with space in one line. 
 	
 Leap Years - https://www.mathsisfun.com/leap-years.html
-
-DONE: 
-2. Replace “-“ in $date with “/“ and print out the result.
 
 
 */
