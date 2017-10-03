@@ -34,32 +34,31 @@
 			$this->html .= textFormat::makeListItem(answers::quesOne($serial));
 			$this->html .= textFormat::makeListItem(answers::quesTwo($date));
 /*
-			$this->html .= answers::quesThree($this->html);
-			$this->html .= answers::quesFour($this->html);
-			$this->html .= answers::quesFive($this->html);
-			$this->html .= answers::quesSix($this->html);
-			$this->html .= answers::quesSeven($this->html);
-			$this->html .= answers::quesEight($this->html);
-			$this->html .= answers::quesNine($this->html);
-			$this->html .= answers::quesTen($this->html);
+			$this->html .= textFormat::makeListItem(answers::quesThree($this->html));
+			$this->html .= textFormat::makeListItem(answers::quesFour($this->html));
+			$this->html .= textFormat::makeListItem(answers::quesFive($this->html));
+			$this->html .= textFormat::makeListItem(answers::quesSix($this->html));
+			$this->html .= textFormat::makeListItem(answers::quesSeven($this->html));
+			$this->html .= textFormat::makeListItem(answers::quesEight($this->html));
+			$this->html .= textFormat::makeListItem(answers::quesNine($this->html));
+			$this->html .= textFormat::makeListItem(answers::quesTen($this->html));
+*/
 			$this->html .= '</ol>';
 			// echo $this->html;
-*/		}
+		}
 		
 		public function __destruct() {
 			$this->html .= '<h1>' . textFormat::lineBreak();
 			$this->html .= '***  DID YOU TURN DEBUG OFF?!  ***';
 			$this->html .= '</h1>' . textFormat::lineBreak();
-			echo 'OUTPUT:<br>';
+
 			echo $this->html;
 			echo 'All done!';
 		}
 	}
 	
 	
-
-	
-	// new classes (function packages) go here
+	// other classes go here
 	class textFormat {
 		static public function preformat($str) {
 			return '<pre>' . $str . '</pre>';
@@ -90,12 +89,22 @@
 			
 			return textformat::preformat($answer);
 		}
+		
+		static public function quesThree($obj) {
+			$tar = date('Y-m-d', $obj['tar']);
+			if ($obj['date'] - $obj['tar'] > 0) {
+				$answer = 'the future';
+			} elseif ($obj['date'] - $obj['tar'] < 0) {
+				$answer = 'the past';
+			}
+			$answer .= textFormat::lineBreak();
+			
+			return textformat::preformat($answer);
+		}
 	}
 	
 
 /* TODO:
-2. Replace “-“ in $date with “/“ and print out the result.
-
 3. Compare $date with $tar and then if the result is greater than 0, you should print out “the future”; if the result is less than 0, you should print out “the past”; if the result is equal to 0, you should print out “Oops”. You must use if-elseif statement in this question. 
 
 4. Search for “/“ in $date and print out all positions. If there are more than one position, please delimit each position value with space.
@@ -116,5 +125,10 @@
 	C. You need to delimit each result with space in one line. 
 	
 Leap Years - https://www.mathsisfun.com/leap-years.html
+
+DONE: 
+2. Replace “-“ in $date with “/“ and print out the result.
+
+
 */
 ?>
