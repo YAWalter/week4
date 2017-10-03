@@ -17,7 +17,7 @@
 			$html .= 'Starting the function display:';
 			echo '1. The Original Data: <br>';
 			
-			$this->html .= textFormat::preformat('The value of \$date: ' . $date . textFormat::lineBreak() . 'The value of \$tar: ' . $tar . textFormat::lineBreak() . 'The value of \$year: ' . 	print_r($year));
+			$this->html .= textFormat::preformat('The value of \$date: ' . $date . textFormat::lineBreak() . 'The value of \$tar: ' . $tar . textFormat::lineBreak() . 'The value of \$year: ' . 	print_r($year) . textFormat::lineBreak());
 
 			echo "HTML: $html";
 		}
