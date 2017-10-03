@@ -1,11 +1,11 @@
 <?php
 
-	// debugging
+	// # DEBUGGING
+	echo '<h1><br>***  DID YOU TURN DEBUG OFF?!  ***<br></h1><br>';
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL | E_STRICT);
 	date_default_timezone_set('UTC');
 	
-
 	$obj = new main();
 	
 	class main {
@@ -26,11 +26,9 @@
 			// begin building output (since this is initial data and we're not altering it yet, it can go in the constructor)
 			
 			// header
-			$this->html .= textFormat::lineBreak();
-			$this->html .= 'Week 4 homework: ' . textFormat::lineBreak();
-			$this->html .= textFormat::lineBreak();
+			$this->html .= textFormat::lineBreak() . 'Week 4 homework: ' . textFormat::lineBreak() . textFormat::lineBreak();
 			
-			// homework output
+			// homework output (list format to handle numbering)
 			$this->html .= '<ol>';
 			$this->html .= textFormat::makeListItem(answers::quesOne($serial));
 			$this->html .= textFormat::makeListItem(answers::quesTwo($date));
@@ -44,62 +42,41 @@
 			$this->html .= textFormat::makeListItem(answers::quesNine($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesTen($this->html));
 */
-			$this->html .= '</ol>';
+			$this->html .= '</ol>' . textFormat::lineBreak();
 			// echo $this->html;
 		}
 		
 		public function __destruct() {
-			$this->html .= '<h1>' . textFormat::lineBreak();
-			$this->html .= '***  DID YOU TURN DEBUG OFF?!  ***';
-			$this->html .= '</h1>' . textFormat::lineBreak();
-
 			echo $this->html;
-			echo 'All done!';
+			echo '<hr>';
 		}
 	}
 	
 	
-	// other classes go here
-	class textFormat {
-		static public function preformat($str) {
-			return '<pre>' . $str . '</pre>';
-		}
-		 
-		static public function lineBreak() {
-			return '<br>';
-		}
-		
-		static public function makeListItem($str) {
-			return '<li>' . $str . '</li>';
-		}
-		
-		static public function makeSlashes($str) {
-			$tmp = str_replace('-', '/', $str)  . textFormat::lineBreak();
-			
-			return $tmp;
-		}
-	}
+	// ## OTHER CLASSES GO HERE
+	//    try to keep everything in alpha order, eh?
+	
 
 	class answers {
-		static public function quesOne($obj) {			
-			$answer  = 'The Original Data: ' . textFormat::lineBreak();
-			$answer .= 'The value of $date: ' . $obj['date'] . textFormat::lineBreak();
-			$answer .= 'The value of $tar:  ' . $obj['tar']  . textFormat::lineBreak();
-			$answer .= 'The value of $year: ' . print_r($obj['year'], true) . textFormat::lineBreak();
+		// 1. The original data
+		static public function quesOne($obj) {
+			$answer .= textFormat::valueOf('$date: ', $obj['date']);
+			$answer .= textFormat::valueOf('$tar:  ', $obj['tar']);
+			$answer .= textFormat::valueOf('$year: ' . print_r($obj['year'], true);
 			
 			return textformat::preformat($answer);
 		}
 		
-		// 2. Replace “-“ in $date with “/“
+		// 2. Replace “-“ in $date with “/“ and print out the result
 		static public function quesTwo($date) {
-			$answer  = 'Replace “-“ in $date with “/“: ' . textFormat::lineBreak();
 			$answer .= textFormat::makeSlashes($date);
 			
 			return textformat::preformat($answer);
 		}
 		
-		// 3. Compare $date with $tar and then if the result is greater than 0, you should print out “the future”; if the result is less than 0, you should print out “the past”; if the result is equal to 0, you should print out “Oops”. You must use if-elseif statement in this question.
+		// 3. Compare $date with $tar and then if the result > 0, print “the future”; if the result < 0, print “the past”; if the result == 0, print “Oops”
 		static public function quesThree($obj) {
+			
 			$date = str_replace('-', '', $obj['date']);
 			$tar  = str_replace('/', '', $obj['tar']);
 
@@ -120,7 +97,7 @@
 			return textformat::preformat($answer);
 		}
 		
-		// 4. Search for “/“ in $date and print out all positions. If there are more than one position, please delimit each position value with space.
+		// 4. Search for “/“ in $date and print out all positions, delimited with ' '
 		static public function quesFour($date) {
 			$pos    = 0;
 			$answer = '';
@@ -137,6 +114,38 @@
 		}
 	}
 	
+	// string formats; keep this in alpha order...
+	class textFormat {
+		static public function lineBreak() {
+			return '<br>';
+		}
+		
+		static public function makeListItem($str) {
+			return '<li>' . $str . '</li>';
+		}
+		
+		static public function chrRemove($str) {
+			$tmp = str_replace($str, '', $str) . textFormat::lineBreak();
+			
+			return $tmp;
+		}
+		
+		static public function makeSlashes($str) {
+			$tmp = str_replace('-', '/', $str)  . textFormat::lineBreak();
+			
+			return $tmp;
+		}
+		
+		static public function preformat($str) {
+			return '<pre>' . $str . '</pre>';
+		}
+		 
+		static public function valueOf($str) {
+			$tmp = 'The value of ' . $title . ': ' . $str . textFormat::lineBreak();
+			
+			return $tmp;
+		}
+	}
 
 /* TODO:
 5. Count the number of words in $date and print out the result.
