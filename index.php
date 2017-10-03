@@ -1,5 +1,10 @@
 <?php
 
+	// debugging
+	ini_set('display_errors', 'On');
+	error_reporting(E_ALL | E_STRICT);
+	
+
 	$obj = new main();
 	
 	class main {
@@ -9,59 +14,87 @@
 		// constructor holds initial array value & prints initial output
 		public function __construct() {
 			// variables:
-			$date =  date('Y-m-d', time());
-			$tar = "2017/05/24";
-			$year = array("2012", "396", "300","2000", "1100", "1089");
+			$date 	=  date('Y-m-d', time());
+			$tar 	= "2017/05/24";
+			$year 	= array("2012", "396", "300","2000", "1100", "1089");
+			$serial 	= array(
+				'date' => $date,
+				'tar'  => $tar,
+				'year' => $year);
 			
-			// output:
-			$html .= 'Starting the function display:';
-			echo '1. The Original Data: <br>';
+			// begin building output (since this is initial data and we're not altering it yet, it can go in the constructor)
 			
-			$this->html .= textFormat::preformat('The value of \$date: ' . $date . textFormat::lineBreak() . 'The value of \$tar: ' . $tar . textFormat::lineBreak() . 'The value of \$year: ' . 	print_r($year) . textFormat::lineBreak());
-
-			echo "HTML: $html";
-		}
-		
-		static public function displayVar() {
-			// echo $var;
-		}
+			// header
+			$this->html .= textFormat::lineBreak();
+			$this->html .= 'Week 4 homework: ' . textFormat::lineBreak();
+			$this->html .= textFormat::lineBreak();
+			
+			// homework output
+			$this->html .= '<ol>';
+			$this->html .= textFormat::makeListItem(answers::quesOne($serial));
+			$this->html .= textFormat::makeListItem(answers::quesTwo($date));
+/*
+			$this->html .= answers::quesThree($this->html);
+			$this->html .= answers::quesFour($this->html);
+			$this->html .= answers::quesFive($this->html);
+			$this->html .= answers::quesSix($this->html);
+			$this->html .= answers::quesSeven($this->html);
+			$this->html .= answers::quesEight($this->html);
+			$this->html .= answers::quesNine($this->html);
+			$this->html .= answers::quesTen($this->html);
+			$this->html .= '</ol>';
+			// echo $this->html;
+*/		}
 		
 		public function __destruct() {
-			print($html);
-			echo '<br> All done!';
+			$this->html .= '<h1>' . textFormat::lineBreak();
+			$this->html .= '***  DID YOU TURN DEBUG OFF?!  ***';
+			$this->html .= '</h1>' . textFormat::lineBreak();
+			echo 'OUTPUT:<br>';
+			echo $this->html;
+			echo 'All done!';
 		}
 	}
 	
-	// display order goes here
-	$questions = 10;
-	for ($i = 1; $i <= $questions; $i++) {
-		answers::buildAnswer($i);		// creates the answer text
-	}
+	
+
 	
 	// new classes (function packages) go here
 	class textFormat {
-		 static public function preformat($str) {
-			 return print('<pre>' . $str . '</pre>');
-		 }
+		static public function preformat($str) {
+			return '<pre>' . $str . '</pre>';
+		}
 		 
-		 static public function lineBreak($str) {
-			 return '<br>';
-		 }
-	}
-
-	class answers {
-		 static public function buildAnswer($order) {
-			$text = $order . '. ';
-			
-			
-			echo $text;
+		static public function lineBreak() {
+			return '<br>';
+		}
+		
+		static public function makeListItem($str) {
+			return '<li>' . $str . '</li>';
 		}
 	}
 
+	class answers {
+		static public function quesOne($obj) {			
+			$answer  = 'The Original Data: ' . textFormat::lineBreak();
+			$answer .= 'The value of $date: ' . $obj['date'] . textFormat::lineBreak();
+			$answer .= 'The value of $tar:  ' . $obj['tar']  . textFormat::lineBreak();
+			$answer .= 'The value of $year: ' . print_r($obj['year'], true) . textFormat::lineBreak();
+			
+			return textformat::preformat($answer);
+		}
+		
+		static public function quesTwo($date) {
+			$answer  = 'Replace “-“ in $date with “/“: ' . textFormat::lineBreak();
+			$answer .= str_replace('-', '/', $date)  . textFormat::lineBreak();
+			
+			return textformat::preformat($answer);
+		}
+	}
 	
 
 /* TODO:
-2.  Replace “-“ in $date with “/“ and print out the result.
+2. Replace “-“ in $date with “/“ and print out the result.
 
 3. Compare $date with $tar and then if the result is greater than 0, you should print out “the future”; if the result is less than 0, you should print out “the past”; if the result is equal to 0, you should print out “Oops”. You must use if-elseif statement in this question. 
 
