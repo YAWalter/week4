@@ -1,10 +1,10 @@
 <?php
 
 	// # DEBUGGING
-	echo '<h1><br>***  TURN DEBUG OFF!!  ***<br></h1><br>';
-	ini_set('display_errors', 'On');
-	error_reporting(E_ALL | E_STRICT);
-	date_default_timezone_set('UTC');
+	// echo '<h1><br>***  TURN DEBUG OFF!!  ***<br></h1><br>';
+	// ini_set('display_errors', 'On');
+	// error_reporting(E_ALL | E_STRICT);
+	// date_default_timezone_set('UTC');
 	
 	$obj = new main();
 	
