@@ -36,9 +36,9 @@
 			$this->html .= textFormat::makeListItem(answers::quesFour($date));
 			$this->html .= textFormat::makeListItem(answers::quesFive($date));
 			$this->html .= textFormat::makeListItem(answers::quesSix($tar));
+			$this->html .= textFormat::makeListItem(answers::quesSeven($tar));
+			$this->html .= textFormat::makeListItem(answers::quesEight($date));
 /*
-			$this->html .= textFormat::makeListItem(answers::quesSeven($this->html));
-			$this->html .= textFormat::makeListItem(answers::quesEight($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesNine($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesTen($this->html));
 */
@@ -117,14 +117,14 @@
 		
 		// 5. Count the number of words in $date
 		static public function quesFive($str) {
-			$words = explode('-', $str);
-			$answer = count($words);
+			$words   = explode('-', $str);
+			$answer  = count($words);
 			$answer .= textformat::lineBreak();
 			
 			return $answer;
 		}
 		
-		// 6. Return the length of a string and print out the result
+		// 6. Return the length of a string
 		static public function quesSix($str) {
 			$answer  = strlen($str);
 			$answer .= ' (length of $tar string)';
@@ -132,6 +132,33 @@
 			
 			return $answer;
 		}
+		
+		// 7. Return the ASCII value of the ﬁrst character of a string
+		static public function quesSeven($str) {
+			$answer  = ord($str);
+			$answer .= ' (ASCII value of first char in $tar)';
+			$answer .= textformat::lineBreak();
+			
+			return $answer;
+		}
+		
+		// 8. Return the last two characters in $date
+		static public function quesEight($str) {
+			$answer  = substr($str, -2);
+			$answer .= textformat::lineBreak();
+			
+			return $answer;
+		}
+		
+		// 9. Break $date into an array and set “separator” parameter as “/“ and print out the each array element and delimit all elements with space. (8%) 
+		static public function quesNine() {}
+		
+		// 10.Loop through the array $year and you need to identify whether each year is a leap year. If it is, print out “True”, otherwise, print out “False”. https://www.mathsisfun.com/leap-years.html
+		static public function quesTen() {}
+		
+			// A. You need to use two methods to loop through the array, which means you need to use two different statement structures to ﬁnish this job. The ﬁrst one must be foreach and the second one could be for or while or do…while. 
+			// B. You need to use switch statement to identify whether a year is a leap year. 
+			// C. You need to delimit each result with space in one line. 
 	}
 	
 	// string formats; keep this in alpha order...
@@ -167,20 +194,4 @@
 		}
 	}
 
-/* TODO:
-7. Return the ASCII value of the ﬁrst character of a string and print out the result. 
-
-8. Return the last two characters in $date and print out the result.
-
-9. Break $date into an array and set “separator” parameter as “/“ and print out the each array element and delimit all elements with space. (8%) 
-
-10.Loop through the array $year and you need to identify whether each year is a leap year. If it is, print out “True”, otherwise, print out “False”.
-	A. You need to use two methods to loop through the array, which means you need to use two different statement structures to ﬁnish this job. The ﬁrst one must be foreach and the second one could be for or while or do…while. 
-	B. You need to use switch statement to identify whether a year is a leap year. 
-	C. You need to delimit each result with space in one line. 
-	
-Leap Years - https://www.mathsisfun.com/leap-years.html
-
-
-*/
 ?>
