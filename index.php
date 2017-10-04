@@ -166,7 +166,8 @@
 		static public function quesTen($years) {
 			$answer = '';
 			foreach ($years as $year) {
-				$answer .= logic::isLeapYear($year) . ' ';
+				$answer .= logic::isLeapYear($year);
+				$answer .= ' ';
 			}
 			$answer .= textformat::lineBreak();
 			
@@ -180,20 +181,20 @@
 	
 	class logic {
 		static public function isLeapYear($year){
-			$bool = 'FALSE';
+			$bool = 'False';
 			switch ($year % 400) {
 				case 0: 
-					$bool = 'TRUE';
+					$bool = 'True';
 					break;
 				default:
 					switch ($year % 100) {
 						case 0:
-							$bool = 'FALSE';
+							$bool = 'False';
 							break;
 						default:
 							switch ($year % 4) {
 								case 0:
-									$bool = 'TRUE';
+									$bool = 'True';
 									break;
 								default:
 									break;
