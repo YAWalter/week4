@@ -166,9 +166,12 @@
 		static public function quesTen($years) {
 			$answer = '';
 			foreach ($years as $year) {
-				$answer .= logic::isLeapYear($year);
-				$answer .= ' ';
+				do {
+					$answer .= logic::isLeapYear($year);
+					$answer .= ' ';					
+				} while (false);
 			}
+			
 			$answer .= textformat::lineBreak();
 			
 			return $answer;
