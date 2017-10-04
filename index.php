@@ -23,7 +23,7 @@
 				'tar'  => $tar,
 				'year' => $year);
 			
-			// begin building output (since this is initial data and we're not altering it yet, it can go in the constructor)
+			// begin building output 
 			
 			// header
 			$this->html .= textFormat::lineBreak() . 'Week 4 homework: ' . textFormat::lineBreak() . textFormat::lineBreak();
@@ -38,10 +38,8 @@
 			$this->html .= textFormat::makeListItem(answers::quesSix($tar));
 			$this->html .= textFormat::makeListItem(answers::quesSeven($tar));
 			$this->html .= textFormat::makeListItem(answers::quesEight($date));
-/*
-			$this->html .= textFormat::makeListItem(answers::quesNine($this->html));
-			$this->html .= textFormat::makeListItem(answers::quesTen($this->html));
-*/
+			$this->html .= textFormat::makeListItem(answers::quesNine($date));
+			$this->html .= textFormat::makeListItem(answers::quesTen($year));
 			$this->html .= '</ol>' . textFormat::lineBreak();
 			// echo $this->html;
 		}
@@ -61,7 +59,7 @@
 		// 1. The original data
 		static public function quesOne($obj) {
 			$answer  = textFormat::valueOf('$date: ', $obj['date']);
-			$answer .= textFormat::valueOf('$tar:  ', $obj['tar']);
+			$answer .= textFormat::valueOf('$tar : ', $obj['tar']);
 			$answer .= textFormat::valueOf('$year: ', print_r($obj['year'], true));
 			
 			return textformat::preformat($answer) . textformat::lineBreak();
@@ -150,15 +148,61 @@
 			return $answer;
 		}
 		
-		// 9. Break $date into an array and set “separator” parameter as “/“ and print out the each array element and delimit all elements with space. (8%) 
-		static public function quesNine() {}
+		// 9. Break $date into an array and set “separator” parameter as “/“ and print out the each array element and delimit all elements with space
+		static public function quesNine($str) {
+			$tmp = textFormat::makeSlashes($str);
+			$answer = '';
+			$tmp = explode('/', $tmp);
+			foreach ($tmp as $val) {
+				$answer .= $val . ' ';
+			}
+			
+			$answer .= textformat::lineBreak();
+			
+			return $answer;
+		}
 		
-		// 10.Loop through the array $year and you need to identify whether each year is a leap year. If it is, print out “True”, otherwise, print out “False”. https://www.mathsisfun.com/leap-years.html
-		static public function quesTen() {}
+		// 10. Loop through the array $year and print “True” if that year is a Leap Year; otherwise, print “False”: https://www.mathsisfun.com/leap-years.html
+		static public function quesTen($years) {
+			$answer = '';
+			foreach ($years as $year) {
+				$answer .= logic::isLeapYear($year) . ' ';
+			}
+			$answer .= textformat::lineBreak();
+			
+			return $answer;
+		}
 		
 			// A. You need to use two methods to loop through the array, which means you need to use two different statement structures to ﬁnish this job. The ﬁrst one must be foreach and the second one could be for or while or do…while. 
 			// B. You need to use switch statement to identify whether a year is a leap year. 
 			// C. You need to delimit each result with space in one line. 
+	}
+	
+	class logic {
+		static public function isLeapYear($year){
+			$bool = 'FALSE';
+			switch ($year % 400) {
+				case 0: 
+					$bool = 'TRUE';
+					break;
+				default:
+					switch ($year % 100) {
+						case 0:
+							$bool = 'FALSE';
+							break;
+						default:
+							switch ($year % 4) {
+								case 0:
+									$bool = 'TRUE';
+									break;
+								default:
+									break;
+							}
+					}
+			}
+			
+			return $bool;
+		}
 	}
 	
 	// string formats; keep this in alpha order...
@@ -169,12 +213,6 @@
 		
 		static public function makeListItem($str) {
 			return '<li>' . $str . '</li>';
-		}
-		
-		static public function chrRemove($str) {
-			$tmp = str_replace($str, '', $str) . textFormat::lineBreak();
-			
-			return $tmp;
 		}
 		
 		static public function makeSlashes($str) {
@@ -188,7 +226,7 @@
 		}
 		 
 		static public function valueOf($title, $str) {
-			$tmp = 'The value of ' . $title . ': ' . $str . textFormat::lineBreak();
+			$tmp = 'The value of ' . $title . $str . textFormat::lineBreak();
 			
 			return $tmp;
 		}
