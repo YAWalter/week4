@@ -1,7 +1,7 @@
 <?php
 
 	// # DEBUGGING
-	echo '<h1><br>***  DID YOU TURN DEBUG OFF?!  ***<br></h1><br>';
+	echo '<h1><br>***  TURN DEBUG OFF!!  ***<br></h1><br>';
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL | E_STRICT);
 	date_default_timezone_set('UTC');
@@ -34,9 +34,9 @@
 			$this->html .= textFormat::makeListItem(answers::quesTwo($date));
 			$this->html .= textFormat::makeListItem(answers::quesThree($serial));
 			$this->html .= textFormat::makeListItem(answers::quesFour($date));
+			$this->html .= textFormat::makeListItem(answers::quesFive($date));
+			$this->html .= textFormat::makeListItem(answers::quesSix($tar));
 /*
-			$this->html .= textFormat::makeListItem(answers::quesFive($this->html));
-			$this->html .= textFormat::makeListItem(answers::quesSix($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesSeven($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesEight($this->html));
 			$this->html .= textFormat::makeListItem(answers::quesNine($this->html));
@@ -60,18 +60,19 @@
 	class answers {
 		// 1. The original data
 		static public function quesOne($obj) {
-			$answer .= textFormat::valueOf('$date: ', $obj['date']);
+			$answer  = textFormat::valueOf('$date: ', $obj['date']);
 			$answer .= textFormat::valueOf('$tar:  ', $obj['tar']);
-			$answer .= textFormat::valueOf('$year: ' . print_r($obj['year'], true);
+			$answer .= textFormat::valueOf('$year: ', print_r($obj['year'], true));
 			
-			return textformat::preformat($answer);
+			return textformat::preformat($answer) . textformat::lineBreak();
 		}
 		
 		// 2. Replace “-“ in $date with “/“ and print out the result
 		static public function quesTwo($date) {
-			$answer .= textFormat::makeSlashes($date);
+			$answer  = textFormat::makeSlashes($date);
+			$answer .= textformat::lineBreak();
 			
-			return textformat::preformat($answer);
+			return $answer;
 		}
 		
 		// 3. Compare $date with $tar and then if the result > 0, print “the future”; if the result < 0, print “the past”; if the result == 0, print “Oops”
@@ -89,12 +90,11 @@
 			} else {
 				$answer = 'ERROR';
 			}
+			
+			// $answer .= '***' . $tar . ' - ' . $date . ' = ' . $tar - $date . '***';
 			$answer .= textFormat::lineBreak();
 			
-/*			$answer .= '***' . $tar . ' - ' . $date . ' = ' . $tar - $date . '***';
-			$answer .= textFormat::lineBreak();*/
-			
-			return textformat::preformat($answer);
+			return $answer;
 		}
 		
 		// 4. Search for “/“ in $date and print out all positions, delimited with ' '
@@ -110,7 +110,27 @@
 				$pos++;
 			}
 			
-			return textFormat::preformat($answer);
+			$answer .= textformat::lineBreak();
+			
+			return $answer;
+		}
+		
+		// 5. Count the number of words in $date
+		static public function quesFive($str) {
+			$words = explode('-', $str);
+			$answer = count($words);
+			$answer .= textformat::lineBreak();
+			
+			return $answer;
+		}
+		
+		// 6. Return the length of a string and print out the result
+		static public function quesSix($str) {
+			$answer  = strlen($str);
+			$answer .= ' (length of $tar string)';
+			$answer .= textformat::lineBreak();
+			
+			return $answer;
 		}
 	}
 	
@@ -131,7 +151,7 @@
 		}
 		
 		static public function makeSlashes($str) {
-			$tmp = str_replace('-', '/', $str)  . textFormat::lineBreak();
+			$tmp = str_replace('-', '/', $str);
 			
 			return $tmp;
 		}
@@ -140,7 +160,7 @@
 			return '<pre>' . $str . '</pre>';
 		}
 		 
-		static public function valueOf($str) {
+		static public function valueOf($title, $str) {
 			$tmp = 'The value of ' . $title . ': ' . $str . textFormat::lineBreak();
 			
 			return $tmp;
@@ -148,10 +168,6 @@
 	}
 
 /* TODO:
-5. Count the number of words in $date and print out the result.
-
-6. Return the length of a string and print out the result.
-
 7. Return the ASCII value of the ﬁrst character of a string and print out the result. 
 
 8. Return the last two characters in $date and print out the result.
